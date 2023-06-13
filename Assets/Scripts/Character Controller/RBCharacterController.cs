@@ -8,7 +8,6 @@ using UnityEngine;
 
 //https://youtu.be/qdskE8PJy6Q
 
-
 [RequireComponent(typeof(Rigidbody))]
 public class RBCharacterController : MonoBehaviour
 {
@@ -35,41 +34,56 @@ public class RBCharacterController : MonoBehaviour
     [SerializeField] private Vector3 forceScale = new Vector3(1, 0, 1);
     // [SerializeField] private float gravityScaleDrop;//10
 
-    private Vector2 input;
-    private Vector3 unitGoal;
-    private Vector3 goalVel;
+    private Vector2 _input;
+    private Vector3 _unitGoal;
+    private Vector3 _goalVel;
     private RaycastHit _floatRayHit;
+
+    private Rigidbody _platform;
+    private Transform _platformParent;
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _platformParent = new GameObject().transform;
+        _platformParent.gameObject.name = gameObject.name + "Platform Handler";
     }
 
     private void Update()
     {
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        UpdatePlatform();
+        _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         //fix for camera angle.
-        unitGoal = new Vector3(input.x, 0, input.y);
+        _unitGoal = new Vector3(_input.x, 0, _input.y);
     }
 
     void FixedUpdate()
     {
+        UpdatePlatform();
         FloatForce();
         UprightForce();
         LocomotionForce();
     }
 
-  
+    private void UpdatePlatform()
+    {
+        if (_platform != null)
+        {
+            _platformParent.transform.position = _platform.transform.position;
+            _platformParent.transform.rotation = _platform.transform.rotation;
+        }
+    }
+
 
     private void LocomotionForce()
     {
-        Vector3 unitVel = goalVel.normalized;
-        float velDot = Vector3.Dot(unitGoal, unitVel);
+        Vector3 unitVel = _goalVel.normalized;
+        float velDot = Vector3.Dot(_unitGoal, unitVel);
         float accel = acceleration * accelerationFactorFromDot.Evaluate(velDot);
-        Vector3 realGoalVelocity = unitGoal * maxSpeed;
+        Vector3 realGoalVelocity = _unitGoal * maxSpeed;
         var groundVelocity = Vector3.zero;
-        goalVel = Vector3.MoveTowards(goalVel, realGoalVelocity + groundVelocity, accel * Time.fixedDeltaTime);
+        _goalVel = Vector3.MoveTowards(_goalVel, realGoalVelocity + groundVelocity, accel * Time.fixedDeltaTime);
 
-        var neededAccel = (goalVel - _rigidbody.velocity) / Time.fixedDeltaTime;
+        var neededAccel = (_goalVel - _rigidbody.velocity) / Time.fixedDeltaTime;
         float maxAccel = maxAccelerationForce * maxAccelerationForceFactorFromDot.Evaluate(velDot);
         neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccel);
         
@@ -96,6 +110,7 @@ public class RBCharacterController : MonoBehaviour
 
             var vel = _rigidbody.velocity;
             var hitBody = _floatRayHit.rigidbody;
+            SetPlatform(_floatRayHit.rigidbody);
             if (hitBody != null)
             {
                 otherVel = hitBody.GetPointVelocity(_floatRayHit.point);
@@ -120,23 +135,42 @@ public class RBCharacterController : MonoBehaviour
                 //now we just need to resolve physics in the orthogonal plane to floating.
                 //player has a friction force that resists changes in velocity.
                 
-                var movingVel = hitBody.GetPointVelocity(_floatRayHit.point);
-                if (movingVel.sqrMagnitude > 0.01f)
-                {
-                    float velDot = Vector3.Dot(_rigidbody.velocity, movingVel);
-
-                    //treat the velocity of the platform as a desired velocity. Maxaccel here basically works like friction.
-                    var neededAccel = (movingVel - _rigidbody.velocity) / Time.fixedDeltaTime;
-                    float maxAccel = maxAccelerationForce*2;//todo set separately.
-                    
-                    neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccel);
-                    var force = (neededAccel * _rigidbody.mass);
-                    force.Scale(forceScale);
-                    _rigidbody.AddForce(force);
-
-                    //todo: add the opposite of our movement force to the platform.
-                }
+                
+                //note: with the parenting trick, this kind of breaks everything.
+                // var movingVel = hitBody.GetPointVelocity(_floatRayHit.point);
+                // if (movingVel.sqrMagnitude > 0.01f)
+                // {
+                //     float velDot = Vector3.Dot(_rigidbody.velocity, movingVel);
+                //
+                //     //treat the velocity of the platform as a desired velocity. Maxaccel here basically works like friction.
+                //     var neededAccel = (movingVel - _rigidbody.velocity) / Time.fixedDeltaTime;
+                //     float maxAccel = maxAccelerationForce*2;//todo set separately.
+                //     
+                //     neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccel);
+                //     var force = (neededAccel * _rigidbody.mass);
+                //     force.Scale(forceScale);
+                //  //   _rigidbody.AddForce(force);
+                //
+                //     //todo: add the opposite of our movement force to the platform.
+                // }
             }
+        }
+    }
+
+    private void SetPlatform(Rigidbody rb)
+    {
+        if (rb == null)
+        {
+            _platform = null;
+            _platformParent.gameObject.SetActive(false);
+            transform.SetParent(null);
+        }
+        else
+        {
+            _platformParent.gameObject.SetActive(true);
+            _platformParent.transform.position = rb.transform.position;
+            _platformParent.transform.rotation = rb.transform.rotation;
+            transform.SetParent(_platformParent);
         }
     }
 
@@ -158,9 +192,9 @@ public class RBCharacterController : MonoBehaviour
     private void CalculateTargetRotation()
     {
         //todo: tilt towards input movement.
-        if (unitGoal.sqrMagnitude > 0.01f)
+        if (_unitGoal.sqrMagnitude > 0.01f)
         {
-            _uprightTargetRot = Quaternion.LookRotation(unitGoal, Vector3.up);
+            _uprightTargetRot = Quaternion.LookRotation(_unitGoal, Vector3.up);
         }
         else
         {

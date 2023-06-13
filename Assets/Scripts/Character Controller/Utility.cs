@@ -24,4 +24,5 @@ public static class Utility
 	{
 		return new Quaternion(input.x * scalar, input.y * scalar, input.z * scalar, input.w * scalar);
 	}
+	
 }
