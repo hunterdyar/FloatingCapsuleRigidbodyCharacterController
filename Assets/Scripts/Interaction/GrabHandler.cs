@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace Interaction
 {
@@ -12,6 +13,27 @@ namespace Interaction
 		private SpringJoint _grabJoint;
 
 		[SerializeField] private SpringJoint jointPreset;
+
+		[SerializeField]private bool updateIKTargets;
+		[SerializeField]private TwoBoneIKConstraint rightArm;
+		[SerializeField]private TwoBoneIKConstraint leftArm;
+
+		private void Update()
+		{
+			if (updateIKTargets && IsHolding)
+			{
+				rightArm.weight = 1;
+				rightArm.data.target.transform.position = _holdingGrabbable.transform.position;//+ _grabJoint.anchor;
+				leftArm.weight = 1;
+				leftArm.data.target.transform.position = _holdingGrabbable.transform.position;//+ _grabJoint.anchor;
+			}
+			else
+			{
+				rightArm.weight = 0;
+				leftArm.weight = 0;
+			}
+			
+		}
 
 		public bool TryGrab(Grabbable grabbable)
 		{
