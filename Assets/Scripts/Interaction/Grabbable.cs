@@ -9,6 +9,7 @@ public class Grabbable : Interactable
 	public Rigidbody Rigidbody => _rigidbody;
 	private Rigidbody _rigidbody;
 
+	public GrabHandler GrabHandler => _grabHandler;
 	private GrabHandler _grabHandler;
 	
 	private void Awake()

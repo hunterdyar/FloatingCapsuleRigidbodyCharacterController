@@ -42,8 +42,23 @@ namespace Interaction
 			{
 				return false;
 			}
-			
+
 			//other things preventing us from grabbing this object?
+
+			if(grabbable.GrabHandler != null)
+			{
+				if (grabbable.GrabHandler == this)
+				{
+					return false;//we are already grabbing it.
+				}
+				else
+				{
+					//we have to steal it from you before we grab it!
+					grabbable.GrabHandler.ForceRelease();
+					Grab(grabbable);
+					return true;
+				}
+			}
 
 			Grab(grabbable);
 			return true;

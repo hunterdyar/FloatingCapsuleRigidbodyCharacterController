@@ -14,14 +14,21 @@ public class Interactable : MonoBehaviour
     
     
     [Header("Interaction Configuration")] 
-    private bool _canBeDirectInteracted;//can you interact with this by pressing a button?
+    [SerializeField] private bool _canBeDirectInteracted;//can you interact with this by pressing a button?
     public UnityEvent OnInteractionStartEvent;
     public UnityEvent OnInteractionStopEvent;
 
     private bool _interacting;
 
+    public bool CanInteract => _canInteract;
+    private bool _canInteract = true;
+    
     public void SetInteracting(bool interacting)
     {
+        if (!_canInteract)
+        {
+            Debug.LogWarning($"Tried to interact with {gameObject.name} but not interactable");
+        }
         if (interacting != _interacting)
         {
             _interacting = interacting;
@@ -51,10 +58,15 @@ public class Interactable : MonoBehaviour
     //player pressed the button.
     public void DirectInteract()
     {
-        if (_canBeDirectInteracted)
+        if (_canInteract && _canBeDirectInteracted)
         {
             StartInteraction();
             StopInteraction();
         }
+    }
+    
+    public void SetInteractable(bool interactable)
+    {
+        _canInteract = interactable;
     }
 }

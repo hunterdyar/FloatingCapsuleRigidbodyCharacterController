@@ -33,8 +33,11 @@ namespace Interaction
 			//then, we interact with anything else.
 			if (_zone.TryGetClosestInteractable(out var interactable))
 			{
-				interactable.DirectInteract();
-				return;
+				if (interactable.CanInteract)
+				{
+					interactable.DirectInteract();
+					return;
+				}
 			}
 		}
 	}
