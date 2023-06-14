@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Button : MonoBehaviour
+public class Button : Interactable
 {
-    [SerializeField] private SpringJoint _buttonJoint;
+    [Header("Button Configuration")]
+    private Joint _buttonJoint;
     public float pressDistance = 0.2f;
-    public bool pressed;
     private void Awake()
     {
-        _buttonJoint = GetComponentInChildren<SpringJoint>();
+        _buttonJoint = GetComponentInChildren<Joint>();
     }
 
     private void Start()
     {
-    }
+    }   
 
     private void Update()
     {
         var offset = (_buttonJoint.anchor - _buttonJoint.transform.localPosition).magnitude;
-        pressed =  offset >= pressDistance;
+        var pressed =  offset >= pressDistance;
+        SetInteracting(pressed);
     }
 }
