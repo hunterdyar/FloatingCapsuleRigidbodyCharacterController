@@ -1,0 +1,10 @@
+\*.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/Alternates/t_jammo_blue.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/Alternates/t_jammo_yellow.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/Alternates/t_jammo_black.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/mixbot_low_mixamo_edit1_AlbedoTransparency.png filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/mixbot_low_mixamo_edit1_AO.png filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/mixbot_low_mixamo_edit1_MetallicSmoothness.png filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/mixbot_low_mixamo_edit1_Normal.png filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Textures/jammo_eyes.png filter=lfs diff=lfs merge=lfs -text
+Assets/Jammo-Character/Files/eyes_vector.ai filter=lfs diff=lfs merge=lfs -text
