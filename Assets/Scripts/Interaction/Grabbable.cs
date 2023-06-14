@@ -35,4 +35,10 @@ public class Grabbable : Interactable
 			_grabHandler.ForceRelease();
 		}
 	}
+
+	public Vector3 GetAnchorPosition(Vector3 grabPosition)
+	{
+		var c = GetComponent<Collider>();
+		return transform.InverseTransformPoint(c.ClosestPoint(grabPosition));
+	}
 }

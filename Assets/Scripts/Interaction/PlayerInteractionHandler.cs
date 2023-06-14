@@ -19,6 +19,7 @@ namespace Interaction
 			{
 				//todo: throwForce
 				_grabHandler.Throw(transform.forward);
+				return;
 			}
 			//Then, we look for things to pick up, which we prioritize over the closest thing, and interact with it.
 			if (_zone.TryGetClosestInteractableOfType<Grabbable>(out var grabbable))
@@ -26,12 +27,14 @@ namespace Interaction
 				if (_grabHandler.TryGrab(grabbable))
 				{
 					Debug.Log("Picked up "+grabbable.gameObject.name);
+					return;
 				}
 			}
 			//then, we interact with anything else.
 			if (_zone.TryGetClosestInteractable(out var interactable))
 			{
 				interactable.DirectInteract();
+				return;
 			}
 		}
 	}

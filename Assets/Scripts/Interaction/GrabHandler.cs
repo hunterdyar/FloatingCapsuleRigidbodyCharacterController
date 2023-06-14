@@ -11,6 +11,8 @@ namespace Interaction
 		[SerializeField] private Rigidbody playerBody;
 		private SpringJoint _grabJoint;
 
+		[SerializeField] private SpringJoint jointPreset;
+
 		public bool TryGrab(Grabbable grabbable)
 		{
 			if (IsHolding)
@@ -31,12 +33,27 @@ namespace Interaction
 		{
 			//turn off auto-connected anchor?
 			_grabJoint = grabbable.gameObject.AddComponent<SpringJoint>();
-			_grabJoint.autoConfigureConnectedAnchor = false;
+
+			//apply preset
+			//todo move to extension method or copy component.
+			_grabJoint.autoConfigureConnectedAnchor = jointPreset.autoConfigureConnectedAnchor;
+			_grabJoint.enableCollision = jointPreset.enableCollision;
+			_grabJoint.spring = jointPreset.spring;
+			_grabJoint.damper = jointPreset.damper;
+			_grabJoint.tolerance = jointPreset.tolerance;
+			_grabJoint.minDistance = jointPreset.minDistance;
+			_grabJoint.maxDistance = jointPreset.maxDistance;
+			_grabJoint.breakForce = jointPreset.breakForce;
+			_grabJoint.breakTorque = jointPreset.breakTorque;
+			_grabJoint.enablePreprocessing = jointPreset.enablePreprocessing;
+			_grabJoint.massScale = jointPreset.massScale;
+			_grabJoint.connectedMassScale = jointPreset.connectedMassScale;
+			
+			//set grabbing.
+			//this is player position
 			_grabJoint.connectedAnchor = transform.localPosition;
-			_grabJoint.enableCollision = true;
-			_grabJoint.spring = 500;
-			_grabJoint.damper = 20;
-			_grabJoint.connectedBody = playerBody;//this should snap to our hands now.
+			_grabJoint.anchor = grabbable.GetAnchorPosition(transform.position);
+			_grabJoint.connectedBody = playerBody; //this should snap to our hands now.
 			
 			grabbable.Grabbed(this);
 			_holdingGrabbable = grabbable;
