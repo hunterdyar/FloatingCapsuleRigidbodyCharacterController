@@ -26,7 +26,6 @@ namespace Interaction
 			{
 				if (_grabHandler.TryGrab(grabbable))
 				{
-					Debug.Log("Picked up "+grabbable.gameObject.name);
 					return;
 				}
 			}

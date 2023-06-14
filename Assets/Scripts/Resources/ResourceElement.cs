@@ -10,5 +10,11 @@ namespace Resources
 
 		public int Count => count;
 		public ShipResource Resource => _resource;
+
+		public void Burn()
+		{
+			//animate to pop
+			Destroy(gameObject);
+		}
 	}
 }

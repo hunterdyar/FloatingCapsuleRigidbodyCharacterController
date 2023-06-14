@@ -50,6 +50,62 @@ namespace Station
 			}
 		}
 
+		public bool TryBurnResources(int resourceToBurn)
+		{
+			var count = ResourceCount;
+			if (resourceToBurn <= 0)
+			{
+				return true;
+			}
+			if (ResourceCount < resourceToBurn)
+			{
+				return false;
+			}
+
+			//...I wrote this really poorly. This is a mess! There's def a clever way to burn the biggest available resources first.
+			
+			//rewrite, make an array of all resource sizes, then go in the order "size of burn left and smaller, descending. if needed, get smallest that is larger")
+			
+			
+			_resourcesInArea.OrderByDescending(x => x.Count);
+
+			while (resourceToBurn > 0 && _resourcesInArea.Count > 0)
+			{
+				var smallerThanBurn = _resourcesInArea.Where(x => x.Count <= resourceToBurn);
+				var resourceElements = smallerThanBurn as ResourceElement[] ?? smallerThanBurn.ToArray();
+				if (resourceElements.Sum(x => x.Count) > resourceToBurn)
+				{
+					foreach (var b in resourceElements)
+					{
+						resourceToBurn -= b.Count;
+						b.Burn();
+						_resourcesInArea.Remove(b);
+						if (resourceToBurn <= 0)
+						{
+							OnResourcesChange?.Invoke();
+							return true;
+						}
+					}
+				}
+
+				resourceToBurn -= _resourcesInArea[0].Count;
+				_resourcesInArea[0].Burn();
+				_resourcesInArea.RemoveAt(0);
+				if (resourceToBurn <= 0)
+				{
+					OnResourcesChange?.Invoke();
+					return true;
+				}
+			}
+
+			//just call once now, not 
+			if (ResourceCount != count)
+			{
+				OnResourcesChange?.Invoke();
+			}
+			return resourceToBurn <= 0;
+		}
+
 		private void OnTriggerExit(Collider other)
 		{
 			var rese = other.GetComponent<ResourceElement>();

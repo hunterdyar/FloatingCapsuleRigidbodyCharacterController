@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Station
 {
@@ -10,6 +11,7 @@ namespace Station
 		[SerializeField]
 		ResourceAreaMonitor energyBank;
 		public int minimumResourcesToInteract;
+		public int energyToBurnOnInteract;
 		public Interactable InteractWithStationInteractable;//ie: a button to FIRE ZE MISSILEZ
 		private bool isPowered;
 
@@ -58,6 +60,15 @@ namespace Station
 
 		private void TryStationAction()
 		{
+			if (energyToBurnOnInteract > 0)
+			{
+				if (!energyBank.TryBurnResources(energyToBurnOnInteract))
+				{
+					//failed to burn enough! We wasted resources!
+					return;
+				}
+			}
+			
 			Debug.Log($"Station Action! {gameObject.name}");
 		}
 	}
