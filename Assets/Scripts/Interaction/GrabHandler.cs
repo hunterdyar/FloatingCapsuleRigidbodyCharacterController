@@ -17,22 +17,23 @@ namespace Interaction
 		[SerializeField]private bool updateIKTargets;
 		[SerializeField]private TwoBoneIKConstraint rightArm;
 		[SerializeField]private TwoBoneIKConstraint leftArm;
-
-		private void Update()
+		private float _targetWeight;
+		[SerializeField] private float moveSpeed;
+ 		private void Update()
 		{
 			if (updateIKTargets && IsHolding)
 			{
-				rightArm.weight = 1;
+				_targetWeight = 1;
 				rightArm.data.target.transform.position = _holdingGrabbable.transform.position;//+ _grabJoint.anchor;
-				leftArm.weight = 1;
 				leftArm.data.target.transform.position = _holdingGrabbable.transform.position;//+ _grabJoint.anchor;
 			}
 			else
 			{
-				rightArm.weight = 0;
-				leftArm.weight = 0;
+				_targetWeight = 0;
 			}
-			
+
+			rightArm.weight = Mathf.MoveTowards(rightArm.weight, _targetWeight, Time.deltaTime*moveSpeed);
+			leftArm.weight = Mathf.MoveTowards(rightArm.weight, _targetWeight, Time.deltaTime*moveSpeed);
 		}
 
 		public bool TryGrab(Grabbable grabbable)
