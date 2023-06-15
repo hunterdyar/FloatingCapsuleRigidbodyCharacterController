@@ -2,18 +2,21 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Station
+namespace Ship
 {
 	public class Station : MonoBehaviour
 	{
 		public Action<bool> OnIsPoweredChange;
 		[SerializeField] private bool requiresEnergyToInteract = true;
 		[SerializeField]
-		ResourceAreaMonitor energyBank;
+		protected ResourceAreaMonitor energyBank;
 		public int minimumResourcesToInteract;
 		public int energyToBurnOnInteract;
 		public Interactable InteractWithStationInteractable;//ie: a button to FIRE ZE MISSILEZ
-		private bool isPowered;
+		public bool IsPowered => isPowered;
+		protected bool isPowered;
+		
+		//todo manual power toggle?
 
 		private void Start()
 		{

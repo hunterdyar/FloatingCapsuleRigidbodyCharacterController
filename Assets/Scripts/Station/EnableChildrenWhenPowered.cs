@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Station
+namespace Ship
 {
 	public class EnableChildrenWhenPowered : MonoBehaviour
 	{

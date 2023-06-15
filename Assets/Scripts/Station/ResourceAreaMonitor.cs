@@ -5,7 +5,7 @@ using Resources;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Station
+namespace Ship
 {
 	public class ResourceAreaMonitor : MonoBehaviour
 	{
