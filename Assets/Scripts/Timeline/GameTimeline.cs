@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using HDyar.SimpleSOStateMachine;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,8 @@ namespace Timeline
 		public Action OnBeat;//before events
 
 		public Action<ShipEvent> OnShipEvent;
+
+		[SerializeField] private State timelineActiveState;
 		public float TimeBetweenBeats => _timeBetweenBeats;
 		[SerializeField] private float _timeBetweenBeats;
 
@@ -32,8 +35,10 @@ namespace Timeline
 				float t = _timeBetweenBeats;
 				while (t > 0)
 				{
-					//if gameplaystate is active
-					t -= Time.deltaTime;
+					if (timelineActiveState.IsCurrentState)
+					{
+						t -= Time.deltaTime;
+					}
 					yield return null;
 				}
 

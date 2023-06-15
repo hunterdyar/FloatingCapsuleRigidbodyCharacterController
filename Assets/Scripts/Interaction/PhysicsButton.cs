@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Button : Interactable
+public class PhysicsButton : Interactable
 {
     [Header("Button Configuration")]
     private Joint _buttonJoint;
