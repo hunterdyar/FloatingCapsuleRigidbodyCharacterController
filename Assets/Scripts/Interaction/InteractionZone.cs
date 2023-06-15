@@ -75,6 +75,7 @@ public class InteractionZone : MonoBehaviour
     {
         if (_interactables.Count > 1)//which it usually won't be.
         {
+            //.where not null
             _interactables = _interactables.OrderBy(x => Vector3.Distance(x.transform.position, _player.transform.position)).ToList();
         }
     }
@@ -86,6 +87,7 @@ public class InteractionZone : MonoBehaviour
             if (!_interactables.Contains(interactable))
             {
                 _interactables.Add(interactable);
+                interactable.OnDestroyed += OnInteractableDestroyed;
                 SortInteractables();
             }
         }
@@ -99,8 +101,19 @@ public class InteractionZone : MonoBehaviour
             if (_interactables.Contains(interactable))
             {
                 _interactables.Remove(interactable);
+                interactable.OnDestroyed -= OnInteractableDestroyed;
                 SortInteractables();
             }
+        }
+    }
+    
+    private void OnInteractableDestroyed(Interactable interactable)
+    {
+        if (_interactables.Contains(interactable))
+        {
+            _interactables.Remove(interactable);
+            interactable.OnDestroyed -= OnInteractableDestroyed;
+            SortInteractables();
         }
     }
 

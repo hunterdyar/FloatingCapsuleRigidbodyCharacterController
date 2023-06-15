@@ -29,6 +29,15 @@ public class Grabbable : Interactable
 		SetInteracting(false);
 	}
 
+	protected override void OnDestroy()
+	{
+		if (_grabHandler != null)
+		{
+			_grabHandler.ForceRelease();
+		}
+		base.OnDestroy();
+	}
+
 	private void OnJointBreak(float breakForce)
 	{
 		if (_grabHandler != null)

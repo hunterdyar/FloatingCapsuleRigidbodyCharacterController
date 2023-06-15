@@ -69,6 +69,12 @@ namespace Interaction
 		/// </summary>
 		private void Grab(Grabbable grabbable)
 		{
+			if (grabbable == null)
+			{
+				Debug.LogError("Grabbable is null!?");
+				ForceRelease();
+				return;
+			}
 			//turn off auto-connected anchor?
 			_grabJoint = grabbable.gameObject.AddComponent<SpringJoint>();
 
@@ -92,17 +98,25 @@ namespace Interaction
 			_grabJoint.connectedAnchor = transform.localPosition;
 			_grabJoint.anchor = grabbable.GetAnchorPosition(transform.position);
 			_grabJoint.connectedBody = playerBody; //this should snap to our hands now.
-			
+
 			grabbable.Grabbed(this);
 			_holdingGrabbable = grabbable;
+			_holdingGrabbable.OnDestroyed += OnGrabbableDestroyed;
+
 		}
 
 		public void Throw(Vector3 throwForce)
 		{
 			_holdingGrabbable.Released();
+			_holdingGrabbable.OnDestroyed -= OnGrabbableDestroyed;
 			Destroy(_grabJoint);
 			_holdingGrabbable.Rigidbody.AddForce(throwForce,ForceMode.Impulse);
 			_holdingGrabbable = null;
+		}
+
+		private void OnGrabbableDestroyed(Interactable interactable)
+		{
+			ForceRelease();
 		}
 
 		//so the grabbable gets the event for joints breaking, but we want to handle releasing
@@ -110,8 +124,11 @@ namespace Interaction
 		public void ForceRelease()
 		{
 			Destroy(_grabJoint);
-			_holdingGrabbable.Released();
-			_holdingGrabbable = null;
+			if (_holdingGrabbable != null)
+			{
+				_holdingGrabbable.Released();
+				_holdingGrabbable = null;
+			}
 		}
 	}
 }

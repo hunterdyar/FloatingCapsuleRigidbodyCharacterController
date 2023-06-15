@@ -15,6 +15,7 @@ namespace Resources
 		{
 			//animate to pop
 			Destroy(gameObject);
+			//if is/has interactable, call death there so it can be ungrabbed, etc
 		}
 
 		public void SetAmount(int resourceAmount)

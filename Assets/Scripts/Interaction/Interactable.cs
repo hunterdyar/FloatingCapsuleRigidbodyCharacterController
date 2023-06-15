@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
+    public Action<Interactable> OnDestroyed;
     //Tracks players interacting with it.
     public Action OnInteractStart;
     public Action OnInteractStop;
@@ -69,5 +70,10 @@ public class Interactable : MonoBehaviour
     public void SetInteractable(bool interactable)
     {
         _canInteract = interactable;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        OnDestroyed?.Invoke(this);
     }
 }
