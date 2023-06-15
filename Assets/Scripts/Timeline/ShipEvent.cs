@@ -11,6 +11,14 @@ namespace Timeline
 		public float eventLocation;//degrees?
 		public int damage;
 		public ShipDamageType DamageType;
+
+		public ShipEvent(ShipEvent clone)
+		{
+			displayName = clone.displayName;
+			eventLocation = clone.eventLocation;
+			damage = clone.damage;
+			DamageType = clone.DamageType;
+		}
 		//Asteroid Impact
 		
 		

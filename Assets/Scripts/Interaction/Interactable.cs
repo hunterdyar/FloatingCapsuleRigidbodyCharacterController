@@ -18,6 +18,7 @@ public class Interactable : MonoBehaviour
     public UnityEvent OnInteractionStartEvent;
     public UnityEvent OnInteractionStopEvent;
 
+    public bool Interacting => _interacting;
     private bool _interacting;
 
     public bool CanInteract => _canInteract;

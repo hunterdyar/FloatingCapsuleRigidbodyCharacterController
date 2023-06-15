@@ -47,7 +47,7 @@ namespace Ship
 				//change state machine to DED. (after we do the impact animations)
 			}
 
-			Debug.Log("Ship Took " + shipEvent.damage + " damage+");
+			Debug.Log("Ship Took " + shipEvent.damage + " damage!");
 			OnHealthChanged?.Invoke(_health);
 		}
 	}

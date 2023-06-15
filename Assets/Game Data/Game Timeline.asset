@@ -16,9 +16,11 @@ MonoBehaviour:
   _shipBeats:
   - ShipEvents:
     - displayName: Asteroid Field
+      eventLocation: 0
       damage: 2
       DamageType: {fileID: 11400000, guid: f49cb50a5839a114280309e2a2f5de64, type: 2}
   - ShipEvents:
     - displayName: Nebula Storm
+      eventLocation: 0
       damage: 1
       DamageType: {fileID: 11400000, guid: 41be42c48f2b11543a6e8d662eebfb76, type: 2}

@@ -15,15 +15,18 @@ namespace Ship
 		public Interactable InteractWithStationInteractable;//ie: a button to FIRE ZE MISSILEZ
 		public bool IsPowered => isPowered;
 		protected bool isPowered;
-		
-		//todo manual power toggle?
+
+		[SerializeField] private bool powerSwitchStartState = true;
+		private bool powerSwitchedOn = true;//for manual override.
 
 		private void Start()
 		{
+			//set initial powered state
+			powerSwitchedOn = powerSwitchStartState;
 			//force call to update initial state.
 			if (!requiresEnergyToInteract)
 			{
-				isPowered = true;
+				isPowered = powerSwitchedOn;
 			}
 			else
 			{
@@ -47,9 +50,9 @@ namespace Ship
 
 		private void CheckIfPowered()
 		{
-			var newIsPowered = true;
+			var newIsPowered = powerSwitchedOn;
 			
-			if (requiresEnergyToInteract)
+			if (powerSwitchedOn && requiresEnergyToInteract)
 			{
 				newIsPowered = energyBank.ResourceCount >= minimumResourcesToInteract;
 			}
@@ -59,6 +62,16 @@ namespace Ship
 				isPowered = newIsPowered;
 				OnIsPoweredChange?.Invoke(isPowered);
 			}
+		}
+
+		public void TogglePowerSwitch()
+		{
+			SetPowerSwitch(!powerSwitchedOn);
+		}
+		public void SetPowerSwitch(bool power)
+		{
+			powerSwitchedOn = power;
+			CheckIfPowered();//broadcast event
 		}
 
 		private void TryStationAction()

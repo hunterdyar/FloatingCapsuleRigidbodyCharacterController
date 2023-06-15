@@ -24,5 +24,21 @@ public static class Utility
 	{
 		return new Quaternion(input.x * scalar, input.y * scalar, input.z * scalar, input.w * scalar);
 	}
-	
+
+	public static float RoundAndNormalizeDegrees360(this float input)
+	{
+		//normalize to range
+		while (input < 0)
+		{
+			input += 360;
+		}
+
+		while (input > 360)
+		{
+			input -= 360;
+		}
+
+		input = Mathf.Round(input);
+		return input;
+	}
 }
