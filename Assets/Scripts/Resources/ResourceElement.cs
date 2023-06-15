@@ -16,5 +16,15 @@ namespace Resources
 			//animate to pop
 			Destroy(gameObject);
 		}
+
+		public void SetAmount(int resourceAmount)
+		{
+			count = resourceAmount;
+		}
+
+		public void SetResource(ShipResource shipResource)
+		{
+			_resource = shipResource;
+		}
 	}
 }
