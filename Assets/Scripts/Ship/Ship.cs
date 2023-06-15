@@ -6,6 +6,7 @@ namespace Ship
 {
 	public class Ship : MonoBehaviour
 	{
+		[SerializeField] private GameTimeline _gameTimeline;
 		public Action<int> OnHealthChanged;
 		public int Health => _health;
 		private int _health;
@@ -16,6 +17,15 @@ namespace Ship
 		//Station References
 		[Header("Station References")] public DamageTypeDefenseStation[] DefenseStations;
 
+		private void OnEnable()
+		{
+			_gameTimeline.OnShipEvent += ProcessShipEvent;
+		}
+
+		private void OnDisable()
+		{
+			_gameTimeline.OnShipEvent -= ProcessShipEvent;
+		}
 
 		public void ProcessShipEvent(ShipEvent shipEvent)
 		{
@@ -36,9 +46,9 @@ namespace Ship
 				_health = 0;
 				//change state machine to DED. (after we do the impact animations)
 			}
+
+			Debug.Log("Ship Took " + shipEvent.damage + " damage+");
 			OnHealthChanged?.Invoke(_health);
-			
-			
 		}
 	}
 }
