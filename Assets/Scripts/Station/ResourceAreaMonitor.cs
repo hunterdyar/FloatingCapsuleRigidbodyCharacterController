@@ -14,6 +14,9 @@ namespace Ship
 		//Tracks the number of Resources in a station.
 		//for example, used by power cell area to track power cells.
 		public int ResourceCount => GetResourceCount();
+		public bool AnyResources => AnyResourcesInArea();
+
+		
 
 		[SerializeField] private ShipResource _resourceToMonitor;
 		private List<ResourceElement> _resourcesInArea;
@@ -37,6 +40,10 @@ namespace Ship
 			return count;
 		}
 
+		private bool AnyResourcesInArea()
+		{
+			return _resourcesInArea.Count > 0;
+		}
 		private void OnTriggerEnter(Collider other)
 		{
 			var rese = other.GetComponent<ResourceElement>();
