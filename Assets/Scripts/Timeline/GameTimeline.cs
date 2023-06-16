@@ -30,6 +30,7 @@ namespace Timeline
 		public float CurrentCountdownInBeat { get; private set; }
 		public IEnumerator RunTimeline()
 		{
+			//beat = [wait... all events] in that order. So on round0 is likely waiting for shipbeat[0].
 			for (int i = 0; i < _shipBeats.Length; i++)
 			{
 				round = i;
@@ -59,6 +60,39 @@ namespace Timeline
 			Debug.Log("Ship Event: " + sEvent.displayName);
 			//clone the ship event so we don't modify the scriptableObject's timeline.
 			OnShipEvent?.Invoke(new ShipEvent(sEvent));
+		}
+
+		public bool TryScanForShipEvents(float scanLocation, out ScanResults scanResults)
+		{
+			Debug.Log($"Scanning Sector {scanLocation}");
+			float angleRange = 45f;
+			int maxBeatDistance = 100;
+
+			for (int i = round; i < _shipBeats.Length; i++)
+			{
+				for (int j = 0; j < _shipBeats[i].ShipEvents.Length; j++)
+				{
+					float loc = _shipBeats[i].ShipEvents[j].eventLocation;
+					if (Mathf.Abs(scanLocation - loc) < angleRange)
+					{
+						scanResults = new ScanResults()
+						{
+							AnythingScanned = true,
+							BeatsUntilEvent = i - round,
+							ScannedEvent = _shipBeats[i].ShipEvents[j]
+						};
+						return true;
+					}
+				}	
+			}
+
+			scanResults = new ScanResults()
+			{
+				AnythingScanned = false,
+				BeatsUntilEvent = 0,
+				ScannedEvent = null
+			};
+			return false;
 		}
 	}
 }

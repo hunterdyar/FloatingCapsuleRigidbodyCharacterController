@@ -84,7 +84,11 @@ namespace Ship
 					return;
 				}
 			}
-			
+			DoStationAction();
+		}
+		
+		protected virtual void DoStationAction()
+		{
 			Debug.Log($"Station Action! {gameObject.name}");
 		}
 	}
