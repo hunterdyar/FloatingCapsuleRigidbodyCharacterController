@@ -11,3 +11,10 @@ Assets/Jammo-Character/Files/eyes_vector.ai filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/ship.blend filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/racoon.blend filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/blobbo.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon-rigged.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/racoonrigged.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/racoon-noRig.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/racoon2.zip filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/racoon2.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/Racoon.png filter=lfs diff=lfs merge=lfs -text
+Assets/Models/Proto/racoon/racoon.blend filter=lfs diff=lfs merge=lfs -text

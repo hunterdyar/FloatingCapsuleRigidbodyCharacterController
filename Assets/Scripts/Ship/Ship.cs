@@ -17,6 +17,10 @@ namespace Ship
 		//Station References
 		[Header("Station References")] public DamageTypeDefenseStation[] DefenseStations;
 
+		void Start()
+		{
+			_health = startingHealth;
+		}
 		private void OnEnable()
 		{
 			_gameTimeline.OnShipEvent += ProcessShipEvent;

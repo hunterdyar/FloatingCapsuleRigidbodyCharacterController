@@ -73,7 +73,7 @@ namespace Timeline
 				for (int j = 0; j < _shipBeats[i].ShipEvents.Length; j++)
 				{
 					float loc = _shipBeats[i].ShipEvents[j].eventLocation;
-					if (Mathf.Abs(scanLocation - loc) < angleRange)
+					if (Mathf.Abs(scanLocation - loc) < angleRange && (i-round < maxBeatDistance))
 					{
 						scanResults = new ScanResults()
 						{

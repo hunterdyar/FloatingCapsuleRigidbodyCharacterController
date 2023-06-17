@@ -12,6 +12,7 @@ public class ProceduralWalkHandler : MonoBehaviour
 
     [SerializeField] private Vector3 footOffset;
     [SerializeField] private Quaternion rotationOffset;
+    [SerializeField] private LayerMask ikHitTargetMask;
     private RaycastHit _hit = new RaycastHit();
     // Update is called once per frame
     void FixedUpdate()
@@ -24,7 +25,7 @@ public class ProceduralWalkHandler : MonoBehaviour
 
     private void SetIKTargetToRaycast(TwoBoneIKConstraint ik, Vector3 castStart)
     {
-        if (Physics.Raycast(castStart, Vector3.down, out _hit, downDistance))
+        if (Physics.Raycast(castStart, Vector3.down, out _hit, downDistance, ikHitTargetMask,QueryTriggerInteraction.Ignore))
         {
             ik.weight = 1;
             ik.data.target.position = _hit.point+transform.InverseTransformVector(footOffset);

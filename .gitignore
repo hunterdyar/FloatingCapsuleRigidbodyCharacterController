@@ -73,3 +73,12 @@ crashlytics-build.properties
 .idea
 *.blend1
 *.blend2
+*.blend3
+*.blend1.meta
+*.blend2.meta
+*.blend3.meta
+
+Assets/Models/Proto/racoon/mixamoexport
+
+
+Assets/Models/Proto/racoon/mixamoexport.meta
