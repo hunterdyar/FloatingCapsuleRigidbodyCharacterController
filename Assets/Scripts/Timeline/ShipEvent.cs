@@ -8,14 +8,14 @@ namespace Timeline
 	{
 		//A ship event is a single thing that happens to a ship. It could be an enemy attack, storm, etc.
 		public string displayName;
-		public float eventLocation;//degrees?
+		public Sector sector;
 		public int damage;
 		public ShipDamageType DamageType;
 
 		public ShipEvent(ShipEvent clone)
 		{
 			displayName = clone.displayName;
-			eventLocation = clone.eventLocation;
+			sector = clone.sector;
 			damage = clone.damage;
 			DamageType = clone.DamageType;
 		}

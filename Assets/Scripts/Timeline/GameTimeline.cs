@@ -2,7 +2,6 @@
 using System.Collections;
 using HDyar.SimpleSOStateMachine;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Timeline
 {
@@ -13,7 +12,7 @@ namespace Timeline
 	{
 		//todo: import state machine... subscribe to game state events.
 
-		public Action OnBeat;//before events
+		public Action OnBeat; //before events
 
 		public Action<ShipEvent> OnShipEvent;
 
@@ -21,13 +20,17 @@ namespace Timeline
 		public float TimeBetweenBeats => _timeBetweenBeats;
 		[SerializeField] private float _timeBetweenBeats;
 
-		[SerializeField]
-		private ShipBeat[] _shipBeats;//this is the actual timeline.
+		[SerializeField] private float degreeOffsetForFirstSector;
+		[SerializeField] private Sector[] _sectors; //evenly distributed, in clockwise order.
+
+
+		[SerializeField] private ShipBeat[] _shipBeats; //this is the actual timeline.
 
 		private ShipBeat[] activeShipBeats;
 		private int round = 0;
-		
+
 		public float CurrentCountdownInBeat { get; private set; }
+
 		public IEnumerator RunTimeline()
 		{
 			//beat = [wait... all events] in that order. So on round0 is likely waiting for shipbeat[0].
@@ -41,6 +44,7 @@ namespace Timeline
 					{
 						CurrentCountdownInBeat -= Time.deltaTime;
 					}
+
 					yield return null;
 				}
 
@@ -50,7 +54,7 @@ namespace Timeline
 				foreach (var sEvent in _shipBeats[i].ShipEvents)
 				{
 					StartShipEvent(sEvent);
-					yield return null;//to wait for animations, ship events could return coroutines.
+					yield return null; //to wait for animations, ship events could return coroutines.
 				}
 			}
 		}
@@ -62,18 +66,17 @@ namespace Timeline
 			OnShipEvent?.Invoke(new ShipEvent(sEvent));
 		}
 
-		public bool TryScanForShipEvents(float scanLocation, out ScanResults scanResults)
+		public bool TryScanForShipEvents(Sector scanSector, out ScanResults scanResults)
 		{
-			Debug.Log($"Scanning Sector {scanLocation}");
-			float angleRange = 45f;
+			Debug.Log($"Scanning Sector {scanSector.displayName}");
 			int maxBeatDistance = 100;
 
 			for (int i = round; i < _shipBeats.Length; i++)
 			{
 				for (int j = 0; j < _shipBeats[i].ShipEvents.Length; j++)
 				{
-					float loc = _shipBeats[i].ShipEvents[j].eventLocation;
-					if (Mathf.Abs(scanLocation - loc) < angleRange && (i-round < maxBeatDistance))
+					Sector sector = _shipBeats[i].ShipEvents[j].sector;
+					if (sector == scanSector && (i - round < maxBeatDistance))
 					{
 						scanResults = new ScanResults()
 						{
@@ -83,7 +86,7 @@ namespace Timeline
 						};
 						return true;
 					}
-				}	
+				}
 			}
 
 			scanResults = new ScanResults()
@@ -94,5 +97,17 @@ namespace Timeline
 			};
 			return false;
 		}
+
+		public Sector GetSectorInDirection(Vector3 dir)
+		{
+			float degrees = Quaternion.FromToRotation(Vector3.forward, dir).eulerAngles.y;
+			degrees = (degrees - degreeOffsetForFirstSector).RoundAndNormalizeDegrees360();
+
+			int count = _sectors.Length;
+			float a = 360f / count;
+			int index = Mathf.FloorToInt((degrees) / a);
+			return _sectors[index];
+		}
+
 	}
 }

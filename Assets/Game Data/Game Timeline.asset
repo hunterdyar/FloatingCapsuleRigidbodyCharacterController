@@ -15,14 +15,20 @@ MonoBehaviour:
   timelineActiveState: {fileID: -3291378469920245995, guid: 73a4eb31fe2e8724bb34562395e3b64d,
     type: 2}
   _timeBetweenBeats: 5
+  degreeOffsetForFirstSector: 0
+  _sectors:
+  - {fileID: 11400000, guid: 6320a4ad1726c5e4f87671a9ebd94a4a, type: 2}
+  - {fileID: 11400000, guid: e2b4a80bdc24c2844ba7a65b1df9ba2d, type: 2}
+  - {fileID: 11400000, guid: 9b4490736958a794d86df5886ee8ad86, type: 2}
+  - {fileID: 11400000, guid: 8aadf76bdeeae9849b3f0ec9525a4cff, type: 2}
   _shipBeats:
   - ShipEvents:
     - displayName: Asteroid Field
-      eventLocation: 0
+      sector: {fileID: 11400000, guid: 6320a4ad1726c5e4f87671a9ebd94a4a, type: 2}
       damage: 2
       DamageType: {fileID: 11400000, guid: f49cb50a5839a114280309e2a2f5de64, type: 2}
   - ShipEvents:
     - displayName: Nebula Storm
-      eventLocation: 0
+      sector: {fileID: 11400000, guid: 8aadf76bdeeae9849b3f0ec9525a4cff, type: 2}
       damage: 1
       DamageType: {fileID: 11400000, guid: 41be42c48f2b11543a6e8d662eebfb76, type: 2}

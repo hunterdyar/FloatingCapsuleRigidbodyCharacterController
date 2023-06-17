@@ -94,6 +94,8 @@ namespace Ship
 			}
 			return true;
 		}
+
+
 		protected virtual void DoStationAction()
 		{
 			Debug.Log($"Station Action! {gameObject.name}");

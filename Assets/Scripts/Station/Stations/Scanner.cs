@@ -19,14 +19,19 @@ namespace Ship
 			return base.CanDoStationAction();
 		}
 
+		[ContextMenu("Scan")]
+
 		protected override void DoStationAction()
 		{
 			//todo: need to add that you can't scan while moving,and i would like to do that in Try, not Do.
 			base.DoStationAction();
-			var scan = Timeline.TryScanForShipEvents(transform.rotation.eulerAngles.y.RoundAndNormalizeDegrees360(), out var results);
+			//go from orientation 
+
+			Sector sector = Timeline.GetSectorInDirection(transform.forward);
+			var scan = Timeline.TryScanForShipEvents(sector, out var results);
 			if (scan)
 			{
-				Debug.Log($"Scan successful! In {results.BeatsUntilEvent} turns there will be a {results.ScannedEvent.displayName} at {results.ScannedEvent.eventLocation} degrees.");
+				Debug.Log($"Scan successful! In {results.BeatsUntilEvent} turns there will be a {results.ScannedEvent.displayName} at {results.ScannedEvent.sector.displayName}.");
 			}
 			else
 			{
