@@ -74,19 +74,26 @@ namespace Ship
 			CheckIfPowered();//broadcast event
 		}
 
-		private void TryStationAction()
+		protected void TryStationAction()
+		{
+			if(CanDoStationAction())
+			{
+				DoStationAction();
+			}
+		}
+		
+		protected virtual bool CanDoStationAction()
 		{
 			if (energyToBurnOnInteract > 0)
 			{
 				if (!energyBank.TryBurnResources(energyToBurnOnInteract))
 				{
 					//failed to burn enough! We wasted resources!
-					return;
+					return false;
 				}
 			}
-			DoStationAction();
+			return true;
 		}
-		
 		protected virtual void DoStationAction()
 		{
 			Debug.Log($"Station Action! {gameObject.name}");

@@ -16,11 +16,12 @@ namespace Ship
 		//breaks if >360.
 		[SerializeField] private float degreeSnap;
 
-		private bool isRotating;
+		private bool _isRotating;
+		public bool IsRotating => _isRotating;
 
 		void Start()
 		{
-			isRotating = false;
+			_isRotating = false;
 			currentTarget = transform.rotation;
 		}
 
@@ -33,7 +34,7 @@ namespace Ship
 
 		private IEnumerator RotateToTarget(Quaternion target)
 		{
-			isRotating = true;
+			_isRotating = true;
 			var start = transform.rotation;
 			var end = target;
 			float t = 0f;
@@ -46,12 +47,12 @@ namespace Ship
 			}
 
 			transform.rotation = end;
-			isRotating = false;
+			_isRotating = false;
 		}
 
 		public void Update()
 		{
-			if (!isRotating)
+			if (!_isRotating)
 			{
 				//check buttons
 				int cw = ClockwiseInput.Interacting ? 1 : 0;
