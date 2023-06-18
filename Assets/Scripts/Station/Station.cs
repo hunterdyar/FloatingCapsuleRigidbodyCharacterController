@@ -19,6 +19,7 @@ namespace Ship
 		[SerializeField] private bool powerSwitchStartState = true;
 		private bool powerSwitchedOn = true;//for manual override.
 
+		[SerializeField] private StatusEffect[] _cantDoActionWithEffects;
 		private void Start()
 		{
 			//set initial powered state
@@ -74,6 +75,7 @@ namespace Ship
 			CheckIfPowered();//broadcast event
 		}
 
+		//todo pass player object along
 		protected void TryStationAction()
 		{
 			if(CanDoStationAction())
@@ -84,6 +86,30 @@ namespace Ship
 		
 		protected virtual bool CanDoStationAction()
 		{
+			//check status effects
+			if (_cantDoActionWithEffects.Length > 0)
+			{
+				foreach (var effect in _cantDoActionWithEffects)
+				{
+					if (effect.IsActive)
+					{
+						//todo: broadcast message to player
+						return false;
+					}
+				}
+			}
+
+			//check if we have energy
+			if (requiresEnergyToInteract)
+			{
+				if(minimumResourcesToInteract > energyBank.ResourceCount)
+				{
+					//not enough resources!
+					return false;
+				}
+			}
+			
+			//check if we can burn energy
 			if (energyToBurnOnInteract > 0)
 			{
 				if (!energyBank.TryBurnResources(energyToBurnOnInteract))

@@ -14,8 +14,10 @@ namespace Timeline
 
 		public Action OnBeat; //before events
 
+		public Action OnTimelineStarted;
 		public Action<ShipEvent> OnShipEvent;
 
+		[SerializeField] private MessageSystem _messageSystem;
 		[SerializeField] private State timelineActiveState;
 		public float TimeBetweenBeats => _timeBetweenBeats;
 		[SerializeField] private float _timeBetweenBeats;
@@ -26,17 +28,18 @@ namespace Timeline
 
 		[SerializeField] private ShipBeat[] _shipBeats; //this is the actual timeline.
 
-		private ShipBeat[] activeShipBeats;
-		private int round = 0;
+		private ShipBeat[] _activeShipBeats;
+		private int _round = 0;
 
 		public float CurrentCountdownInBeat { get; private set; }
 
 		public IEnumerator RunTimeline()
 		{
+			OnTimelineStarted?.Invoke();
 			//beat = [wait... all events] in that order. So on round0 is likely waiting for shipbeat[0].
 			for (int i = 0; i < _shipBeats.Length; i++)
 			{
-				round = i;
+				_round = i;
 				CurrentCountdownInBeat = _timeBetweenBeats;
 				while (CurrentCountdownInBeat > 0)
 				{
@@ -61,7 +64,6 @@ namespace Timeline
 
 		private void StartShipEvent(ShipEvent sEvent)
 		{
-			Debug.Log("Ship Event: " + sEvent.displayName);
 			//clone the ship event so we don't modify the scriptableObject's timeline.
 			OnShipEvent?.Invoke(new ShipEvent(sEvent));
 		}
@@ -71,17 +73,17 @@ namespace Timeline
 			Debug.Log($"Scanning Sector {scanSector.displayName}");
 			int maxBeatDistance = 100;
 
-			for (int i = round; i < _shipBeats.Length; i++)
+			for (int i = _round; i < _shipBeats.Length; i++)
 			{
 				for (int j = 0; j < _shipBeats[i].ShipEvents.Length; j++)
 				{
 					Sector sector = _shipBeats[i].ShipEvents[j].sector;
-					if (sector == scanSector && (i - round < maxBeatDistance))
+					if (sector == scanSector && (i - _round < maxBeatDistance))
 					{
 						scanResults = new ScanResults()
 						{
 							AnythingScanned = true,
-							BeatsUntilEvent = i - round,
+							BeatsUntilEvent = i - _round,
 							ScannedEvent = _shipBeats[i].ShipEvents[j]
 						};
 						return true;

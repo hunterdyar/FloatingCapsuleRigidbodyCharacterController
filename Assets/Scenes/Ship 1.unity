@@ -7148,6 +7148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 970347869}
   - component: {fileID: 970347868}
+  - component: {fileID: 970347870}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -7169,6 +7170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameTimeline: {fileID: 11400000, guid: 3c355b17e3522cf4d9788ba4675269a5, type: 2}
   startingHealth: 3
+  _startingStatusEffects: []
   DefenseStations:
   - {fileID: 8267256468120029693}
 --- !u!4 &970347869
@@ -7187,6 +7189,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &970347870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970347867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec8946b78554641b1c1d1607d8d32b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1008957501
 PrefabInstance:
   m_ObjectHideFlags: 0
