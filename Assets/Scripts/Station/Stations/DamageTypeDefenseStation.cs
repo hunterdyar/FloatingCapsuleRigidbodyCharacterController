@@ -24,10 +24,19 @@ namespace Ship
 		{
 			if (isPowered && shipEvent.damage > 0 && shipEvent.DamageType == DamageType)
 			{
-				if (energyBank.TryBurnResources(energyBurnNeededToPreventOneDamageType))
+				if (energyBurnNeededToPreventOneDamageType > 0)
+				{
+					if (energyBank.TryBurnResources(energyBurnNeededToPreventOneDamageType))
+					{
+						shipEvent.damage--;
+						return true;
+					}
+				}
+				else
 				{
 					shipEvent.damage--;
 					return true;
+					//reduce no matter what.
 				}
 			}
 

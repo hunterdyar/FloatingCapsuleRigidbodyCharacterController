@@ -25,7 +25,9 @@ namespace Ship
 		private readonly List<StatusEffect> _statusEffects = new List<StatusEffect>();
 
 		//Station References
-		[Header("Station References")] public DamageTypeDefenseStation[] DefenseStations;
+		[Header("Station References")]
+		public DamageTypeDefenseStation[] DefenseStations;
+		public DirectionalDamageShield[] Shields;
 
 		void Start()
 		{
@@ -71,6 +73,10 @@ namespace Ship
 		public void ProcessShipEvent(ShipEvent shipEvent)
 		{
 			//reduce any incoming damage.
+			foreach (var shield in Shields)
+			{
+				shield.ProcessShipEvent(ref shipEvent);
+			}
 			foreach (var defenseStation in DefenseStations)
 			{
 				defenseStation.ProcessShipEvent( ref shipEvent);

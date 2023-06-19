@@ -41,6 +41,7 @@ namespace Ship
 		{
 			energyBank.OnResourcesChange += CheckIfPowered;
 			InteractWithStationInteractable.OnInteractStart += TryStationAction;
+			
 		}
 
 		private void OnDisable()
