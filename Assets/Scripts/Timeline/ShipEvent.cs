@@ -1,5 +1,6 @@
 ﻿using System;
 using Ship;
+using UnityEngine;
 
 namespace Timeline
 {
@@ -12,6 +13,9 @@ namespace Timeline
 		public Sector sector;
 		public int damage;
 		public ShipDamageType DamageType;
+		/// <summary>
+		/// Status Effect to apply. Can be null.
+		/// </summary>
 		public StatusEffect StatusEffect;
 
 		public ShipEvent(ShipEvent clone)
@@ -26,7 +30,17 @@ namespace Timeline
 
 		public MessageInfo GetMessage()
 		{
-			return new MessageInfo("Event: " + displayName);
+			string text = "Event: " + displayName;
+			if (damage > 0)
+			{
+				text += $". Ship took {damage} {DamageType.name} Damage";
+			}
+			else
+			{
+				text += ". Ship took no damage.";
+			}
+
+			return new MessageInfo(text);
 		}
 	}
 }

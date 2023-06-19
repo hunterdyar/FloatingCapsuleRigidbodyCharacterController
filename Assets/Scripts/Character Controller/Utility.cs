@@ -33,7 +33,7 @@ public static class Utility
 			input += 360;
 		}
 
-		while (input > 360)
+		while (input >= 360)
 		{
 			input -= 360;
 		}

@@ -11,13 +11,12 @@ namespace Timeline
 	public class GameTimeline : ScriptableObject
 	{
 		//todo: import state machine... subscribe to game state events.
-
+		public Action OnNewBeat;//before waiting for events.
 		public Action OnBeat; //before events
 
 		public Action OnTimelineStarted;
 		public Action<ShipEvent> OnShipEvent;
 
-		[SerializeField] private MessageSystem _messageSystem;
 		[SerializeField] private State timelineActiveState;
 		public float TimeBetweenBeats => _timeBetweenBeats;
 		[SerializeField] private float _timeBetweenBeats;
@@ -25,22 +24,24 @@ namespace Timeline
 		[SerializeField] private float degreeOffsetForFirstSector;
 		[SerializeField] private Sector[] _sectors; //evenly distributed, in clockwise order.
 
-
 		[SerializeField] private ShipBeat[] _shipBeats; //this is the actual timeline.
 
 		private ShipBeat[] _activeShipBeats;
 		private int _round = 0;
 
+		public bool IsTimelineActive { get; private set; }
 		public float CurrentCountdownInBeat { get; private set; }
 
 		public IEnumerator RunTimeline()
 		{
+			IsTimelineActive = true;
 			OnTimelineStarted?.Invoke();
 			//beat = [wait... all events] in that order. So on round0 is likely waiting for shipbeat[0].
 			for (int i = 0; i < _shipBeats.Length; i++)
 			{
 				_round = i;
 				CurrentCountdownInBeat = _timeBetweenBeats;
+				OnNewBeat?.Invoke();
 				while (CurrentCountdownInBeat > 0)
 				{
 					if (timelineActiveState.IsCurrentState)
@@ -60,6 +61,8 @@ namespace Timeline
 					yield return null; //to wait for animations, ship events could return coroutines.
 				}
 			}
+
+			IsTimelineActive = false;
 		}
 
 		private void StartShipEvent(ShipEvent sEvent)
@@ -111,5 +114,28 @@ namespace Timeline
 			return _sectors[index];
 		}
 
+		public bool TryGetShipEventInSector(Sector sector, int roundsFromCurrent, out ShipEvent shipEvent)
+		{
+			int round = _round + roundsFromCurrent;
+			if (round < 0 || round >= _shipBeats.Length)
+			{
+				shipEvent = null;
+				return false;
+			}
+
+			var beat = _shipBeats[round];
+			foreach (var se in beat.ShipEvents)
+			{
+				if (se.sector == sector)
+				{
+					shipEvent = se;
+					return true;
+					//todo: handle case where multiple shipEvents are in the same sector? we might have a "none" sector for generic things.
+				}
+			}
+
+			shipEvent = null;
+			return false;
+		}
 	}
 }

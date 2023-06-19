@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 875323b146c749ddbc2cb32221a8b8ed, type: 3}
-  m_Name: Asteroid Impact
+  m_Name: Space Octopus
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: a216a21048ccb254db875dcd87f46a4a, type: 3}
-  iconColor: {r: 0.6886792, g: 0.31967598, b: 0.13968495, a: 1}
+  Icon: {fileID: 21300000, guid: 31d1c58121349a4478bf2bd30fdd9b11, type: 3}
+  iconColor: {r: 0.50143856, g: 0.20572266, b: 0.6320754, a: 1}

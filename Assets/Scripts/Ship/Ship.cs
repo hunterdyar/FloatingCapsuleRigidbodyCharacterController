@@ -12,12 +12,11 @@ namespace Ship
 	{
 		public GameTimeline GameTimeline => _gameTimeline;
 		[SerializeField] private GameTimeline _gameTimeline;
-		public Action<int> OnHealthChanged;
-		public int Health => _health;
 		public Action<StatusEffect> OnStatusEffectGained;
 
-		private int _health;
-
+		public ShipInfo ShipInfo => _shipInfo;
+		[SerializeField] private ShipInfo _shipInfo;
+		
 		[Header("Configuration")]
 		[SerializeField] private int startingHealth = 3;
 
@@ -31,7 +30,7 @@ namespace Ship
 
 		void Start()
 		{
-			_health = startingHealth;
+			_shipInfo.SetHealth(startingHealth);
 			foreach(var effect in _startingStatusEffects)
 			{
 				GainStatusEffect(effect);
@@ -95,15 +94,8 @@ namespace Ship
 
 		private void TakeDamage(ref ShipEvent shipEvent)
 		{
-			_health -= shipEvent.damage;
-			if (_health < 0)
-			{
-				_health = 0;
-				//change state machine to DED. (after we do the impact animations)
-			}
-
+			_shipInfo.TakeDamage(shipEvent.damage);
 			Debug.Log("Ship Took " + shipEvent.damage + " damage!");
-			OnHealthChanged?.Invoke(_health);
 		}
 	}
 }

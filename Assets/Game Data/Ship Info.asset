@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875323b146c749ddbc2cb32221a8b8ed, type: 3}
-  m_Name: Laser
+  m_Script: {fileID: 11500000, guid: 07103f8b0403461697a9b5dcb950f663, type: 3}
+  m_Name: Ship Info
   m_EditorClassIdentifier: 

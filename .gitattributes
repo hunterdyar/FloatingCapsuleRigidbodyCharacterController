@@ -18,3 +18,5 @@ Assets/Models/Proto/racoon/racoon2.zip filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/racoon/racoon2.fbx filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/racoon/Racoon.png filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Proto/racoon/racoon.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Sprites/icons/asteroid.png filter=lfs diff=lfs merge=lfs -text
+Assets/Sprites/icons/octopus.png filter=lfs diff=lfs merge=lfs -text
