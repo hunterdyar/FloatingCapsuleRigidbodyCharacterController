@@ -46,8 +46,19 @@ namespace Character_Controller
 			if (TiltPlayerIndex != PlayerIndex.None)
 			{
 				//todo remap to forward
-				var tFiveInput = TiltFive.Input.GetStickTilt(_controllerIndex, TiltPlayerIndex);
+				var tFiveInputv2 = TiltFive.Input.GetStickTilt(_controllerIndex, TiltPlayerIndex);
+				var tFiveInput = new Vector3(tFiveInputv2.x, 0, tFiveInputv2.y);
+				if (ControllerForward != null)
+				{
+					Vector3 forward = ControllerForward.transform.forward;
+					forward = new Vector3(forward.x, 0, forward.z).normalized;
+					Vector3 right = ControllerForward.transform.right;
+					right = new Vector3(right.x, 0, right.z).normalized;
+
+					tFiveInput = right * tFiveInputv2.x + forward * tFiveInputv2.y;
+				}
 				_characterController.Move(tFiveInput);
+				
 				_trigger = TiltFive.Input.GetTrigger(_controllerIndex, TiltPlayerIndex);
 				if (_trigger > _triggerThreshold)
 				{

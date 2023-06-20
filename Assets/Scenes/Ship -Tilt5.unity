@@ -1840,18 +1840,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282528940}
-  m_LocalRotation: {x: 0.59681726, y: -0, z: -0, w: 0.8023772}
-  m_LocalPosition: {x: 0, y: 0, z: 20.6}
+  m_LocalRotation: {x: 0.67105967, y: -0.0008063913, z: 0.00055929745, w: 0.74140275}
+  m_LocalPosition: {x: 0, y: 0, z: -16.89473}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 343532056}
-  m_Father: {fileID: 0}
-  m_RootOrder: 23
-  m_LocalEulerAnglesHint: {x: 73.285, y: 0, z: 0}
+  m_Father: {fileID: 336609521}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 84.298, y: -0.257, z: -0.146}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -12.1, y: 21.3}
+  m_AnchoredPosition: {x: -13.699877, y: -2.0537024}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &308287039
@@ -1920,7 +1920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312462697
 GameObject:
@@ -2936,6 +2936,38 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &336609520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336609521}
+  m_Layer: 0
+  m_Name: P1 Aim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &336609521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336609520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -69.9, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 282528944}
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &343532056 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8061489137265250515, guid: 33655d3fecdd0044994aab6577d3d757,
@@ -5676,7 +5708,6 @@ MonoBehaviour:
     type: 3}
   spawnLocation: {fileID: 715412662}
   searchForMoreControllers: 1
-  defaultControllerIndex: 0
 --- !u!4 &715412662
 Transform:
   m_ObjectHideFlags: 0
@@ -5690,7 +5721,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &807454943
 PrefabInstance:
@@ -10028,7 +10059,7 @@ PrefabInstance:
     - target: {fileID: 6132178175923897642, guid: ac17611f933f2524b8ee0a5036ffd429,
         type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6132178175923897642, guid: ac17611f933f2524b8ee0a5036ffd429,
         type: 3}
@@ -10082,8 +10113,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
         type: 3}
-      propertyPath: editorSettings.selectedPlayerSettingsPanel
+      propertyPath: editorSettings.selectedPlayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
+        type: 3}
+      propertyPath: editorSettings.selectedPlayerSettingsPanel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
+        type: 3}
+      propertyPath: allPlayerSettings.Array.data[0].rightWandSettings.AimPoint
+      value: 
+      objectReference: {fileID: 336609520}
+    - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
+        type: 3}
+      propertyPath: allPlayerSettings.Array.data[1].rightWandSettings.AimPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
+        type: 3}
+      propertyPath: allPlayerSettings.Array.data[2].rightWandSettings.AimPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
+        type: 3}
+      propertyPath: allPlayerSettings.Array.data[2].rightWandSettings.GripPoint
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6601963360236768345, guid: ac17611f933f2524b8ee0a5036ffd429,
         type: 3}

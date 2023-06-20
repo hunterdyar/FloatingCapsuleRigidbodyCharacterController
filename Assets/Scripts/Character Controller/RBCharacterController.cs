@@ -53,9 +53,9 @@ public class RBCharacterController : MonoBehaviour
         UpdatePlatform();
     }
 
-    public void Move(Vector2 input)
+    public void Move(Vector3 input)
     {
-        _input = input;
+        _input = new Vector2(input.x,input.z);
         //fix for camera angle.
         _unitGoal = new Vector3(_input.x, 0, _input.y);
 

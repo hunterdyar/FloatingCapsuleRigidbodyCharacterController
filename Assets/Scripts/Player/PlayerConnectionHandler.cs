@@ -73,6 +73,13 @@ namespace Player
 			{
 				//can be null
 				input.ControllerForward = TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint;
+				if (input.ControllerForward == null)
+				{
+					input.ControllerForward = new GameObject();
+					input.ControllerForward.name = "P" + player.ToString()+ " Aim";
+					TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint =
+						input.ControllerForward;
+				}
 			}
 
 			if (TiltFive.Player.TryGetFriendlyName(player, out var friendlyName))
