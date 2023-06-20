@@ -55,7 +55,7 @@ public class RBCharacterController : MonoBehaviour
 
     public void Move(Vector2 input)
     {
-        _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _input = input;
         //fix for camera angle.
         _unitGoal = new Vector3(_input.x, 0, _input.y);
 

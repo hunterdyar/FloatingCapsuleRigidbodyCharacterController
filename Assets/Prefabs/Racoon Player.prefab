@@ -309,6 +309,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf3afb8ccf049de97fb988eab393f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TiltPlayerIndex: 0
+  interactButton: 1
+  _triggerThreshold: 0.907
 --- !u!114 &322624736026847574
 MonoBehaviour:
   m_ObjectHideFlags: 0

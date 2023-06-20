@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Character_Controller;
 using TiltFive;
 using UnityEngine;
@@ -15,8 +16,11 @@ namespace Player
 		private Dictionary<PlayerIndex, GameObject> _players = new Dictionary<PlayerIndex, GameObject>();
 
 		public bool searchForMoreControllers;
-
-		public ControllerIndex defaultControllerIndex = ControllerIndex.Right;
+		
+		private void Awake()
+		{
+			_players = new Dictionary<PlayerIndex, GameObject>();
+		}
 
 		// Update is called once per frame
 		void Update()
@@ -27,13 +31,16 @@ namespace Player
 				for (int i = 1; i <= 4; i++)
 				{
 					var pindex = (PlayerIndex)i; //we can cast an int to an enum. Conveniently, one is 1, two is 2, etc. 
-					if (TiltFive.Player.IsConnected(pindex) && !_players.ContainsKey(pindex))
+					if (TiltFive.Input.GetButtonDown(TiltFive.Input.WandButton.One, ControllerIndex.Right, pindex))
 					{
-						SpawnPlayer(pindex);
-						//got all expected?
-						if (i == 4)
+						if (TiltFive.Player.IsConnected(pindex) && !_players.ContainsKey(pindex))
 						{
-							searchForMoreControllers = false;
+							SpawnPlayer(pindex);
+							//got all expected?
+							if (i == 4)
+							{
+								searchForMoreControllers = false;
+							}
 						}
 					}
 				}
@@ -47,6 +54,11 @@ namespace Player
 
 		void SpawnPlayer(PlayerIndex player)
 		{
+			if (_players.ContainsKey(player))
+			{
+				return;
+			}
+			
 			var p = Instantiate(PlayerPrefab, spawnLocation.position, spawnLocation.rotation);
 
 			//configure input
@@ -59,12 +71,13 @@ namespace Player
 			//We set it to one of the tracked objects of the wand in order to make it relative to literally how the controller is oriented.
 			if (player != PlayerIndex.None)
 			{
-				input.ControllerForward = TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint.transform;
+				//can be null
+				input.ControllerForward = TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint;
 			}
 
 			if (TiltFive.Player.TryGetFriendlyName(player, out var friendlyName))
 			{
-				p.name = "Player - " + friendlyName;
+				p.name = "Player " + player.ToString()+ " - "+friendlyName;
 			}
 
 			//todo: configure visuals

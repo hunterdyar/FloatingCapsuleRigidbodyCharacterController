@@ -11,13 +11,34 @@ namespace Character_Controller
 	{
 		private RBCharacterController _characterController;
 		private PlayerInteractionHandler _interactionHandler;
-		public PlayerIndex TiltPlayerIndex { get; set; }
-		public Transform ControllerForward { get; set; }//forward in world space.
+		private ControllerIndex _controllerIndex = ControllerIndex.Right;
+		public PlayerIndex TiltPlayerIndex;
+		public GameObject ControllerForward { get; set; }//forward in world space.
 
+		public TiltFive.Input.WandButton interactButton;
+		private float _trigger;
+		[Range(0,1)]public float _triggerThreshold;
+		private bool _triggerPressed;
+		
 		private void Awake()
 		{
 			_characterController = GetComponent<RBCharacterController>();
 			_interactionHandler = GetComponent<PlayerInteractionHandler>();
+		}
+
+		private void Start()
+		{
+			TiltFive.Wand.TryCheckConnected(out var rightConnected, TiltPlayerIndex, ControllerIndex.Right);
+			TiltFive.Wand.TryCheckConnected(out var leftConnected, TiltPlayerIndex, ControllerIndex.Left);
+
+			if (rightConnected)
+			{
+				_controllerIndex = ControllerIndex.Right;
+			}else if (leftConnected)
+			{
+				//left and not right. todo: just support both at the same time.
+				_controllerIndex = ControllerIndex.Left;
+			}
 		}
 
 		private void Update()
@@ -25,8 +46,25 @@ namespace Character_Controller
 			if (TiltPlayerIndex != PlayerIndex.None)
 			{
 				//todo remap to forward
-				_characterController.Move(TiltFive.Input.GetStickTilt(ControllerIndex.Right, TiltPlayerIndex));
-				if (TiltFive.Input.GetButton(TiltFive.Input.WandButton.One,ControllerIndex.Right,TiltPlayerIndex))
+				var tFiveInput = TiltFive.Input.GetStickTilt(_controllerIndex, TiltPlayerIndex);
+				_characterController.Move(tFiveInput);
+				_trigger = TiltFive.Input.GetTrigger(_controllerIndex, TiltPlayerIndex);
+				if (_trigger > _triggerThreshold)
+				{
+					if (!_triggerPressed)
+					{
+						_triggerPressed = true;
+						_interactionHandler.Interact();
+					}
+				}
+				else
+				{
+					_triggerPressed = false;
+				}
+				
+				
+				//alt
+				if (TiltFive.Input.GetButtonDown(interactButton,_controllerIndex,TiltPlayerIndex))
 				{
 					_interactionHandler.Interact();
 				}
