@@ -23,7 +23,11 @@ public class Interactable : MonoBehaviour
     private bool _interacting;
 
     public bool CanInteract => _canInteract;
+    public string Verb;
+
     private bool _canInteract = true;
+
+    [SerializeField] private Transform overrideUIPosition;
     
     public void SetInteracting(bool interacting)
     {
@@ -75,5 +79,10 @@ public class Interactable : MonoBehaviour
     protected virtual void OnDestroy()
     {
         OnDestroyed?.Invoke(this);
+    }
+
+    public virtual Vector3 GetWorldUIPosition()
+    {
+        return overrideUIPosition == null ? transform.position : overrideUIPosition.position;
     }
 }

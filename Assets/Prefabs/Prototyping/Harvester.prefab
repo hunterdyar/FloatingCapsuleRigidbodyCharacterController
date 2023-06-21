@@ -270,6 +270,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _station: {fileID: 3591487497979715910}
+--- !u!1 &3071972156312801505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7611684423087235105}
+  m_Layer: 0
+  m_Name: UI Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7611684423087235105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3071972156312801505}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.51, y: 3.57, z: 0.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8123779849487430396}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3395015674420754964
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +325,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3395015674420754964}
-  m_LocalRotation: {x: -0, y: 0.8993026, z: -0, w: -0.43732706}
+  m_LocalRotation: {x: 0, y: 0.8993023, z: -0, w: -0.4373276}
   m_LocalPosition: {x: -11, y: 2.25, z: -8.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -310,8 +341,9 @@ Transform:
   - {fileID: 8804394564891038087}
   - {fileID: 448086873729901358}
   - {fileID: 2993451001517195039}
+  - {fileID: 7611684423087235105}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 231.867, z: 0}
 --- !u!114 &3591487497979715910
 MonoBehaviour:
@@ -331,6 +363,7 @@ MonoBehaviour:
   energyToBurnOnInteract: 0
   InteractWithStationInteractable: {fileID: 2780874563056216484}
   powerSwitchStartState: 0
+  _cantDoActionWithEffects: []
   _Timeline: {fileID: 11400000, guid: 3c355b17e3522cf4d9788ba4675269a5, type: 2}
   _energyPrefab: {fileID: 4055888590520877903, guid: 285fd3afb568ecb47b2b444ff4927d36,
     type: 3}
@@ -925,6 +958,8 @@ MonoBehaviour:
   OnInteractionStopEvent:
     m_PersistentCalls:
       m_Calls: []
+  Verb: Toggle Harvester Power
+  overrideUIPosition: {fileID: 7611684423087235105}
 --- !u!1 &7289138850035190798
 GameObject:
   m_ObjectHideFlags: 0
