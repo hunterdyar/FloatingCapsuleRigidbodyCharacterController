@@ -11,10 +11,12 @@ public class Grabbable : Interactable
 
 	public GrabHandler GrabHandler => _grabHandler;
 	private GrabHandler _grabHandler;
-	
+
+	private MeshRenderer _meshRenderer;
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody>();
+		_meshRenderer = GetComponentInChildren<MeshRenderer>();
 	}
 	
 	public void Grabbed(GrabHandler grabHandler)
@@ -44,6 +46,11 @@ public class Grabbable : Interactable
 		{
 			_grabHandler.ForceRelease();
 		}
+	}
+
+	public override Vector3 GetWorldUIPosition()
+	{
+		return _meshRenderer.bounds.center + new Vector3(0,_meshRenderer.bounds.extents.y+0.2f,0);
 	}
 
 	public Vector3 GetAnchorPosition(Vector3 grabPosition)

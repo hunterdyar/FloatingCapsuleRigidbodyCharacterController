@@ -7,16 +7,17 @@ namespace Interaction
 	public class GrabHandler : MonoBehaviour
 	{
 		public bool IsHolding => _holdingGrabbable != null;
+		public Grabbable HoldingGrabbable => _holdingGrabbable;
 		private Grabbable _holdingGrabbable;
 		
 		[SerializeField] private Rigidbody playerBody;
 		private SpringJoint _grabJoint;
 
 		[SerializeField] private SpringJoint jointPreset;
-
 		[SerializeField]private bool updateIKTargets;
 		[SerializeField]private TwoBoneIKConstraint rightArm;
 		[SerializeField]private TwoBoneIKConstraint leftArm;
+		
 		private float _targetWeight;
 		[SerializeField] private float moveSpeed;
  		private void Update()
@@ -36,6 +37,29 @@ namespace Interaction
 			leftArm.weight = Mathf.MoveTowards(rightArm.weight, _targetWeight, Time.deltaTime*moveSpeed);
 		}
 
+        //todo rewrite
+        public bool CanGrab(Grabbable grabbable)
+        {
+	        if (IsHolding)
+	        {
+		        return false;
+	        }
+
+	        //other things preventing us from grabbing this object?
+	        if (grabbable.GrabHandler != null)
+	        {
+		        if (grabbable.GrabHandler == this)
+		        {
+			        return false; //we are already grabbing it.
+		        }
+		        else
+		        {
+			        return true;
+		        }
+	        }
+
+	        return true;
+        }
 		public bool TryGrab(Grabbable grabbable)
 		{
 			if (IsHolding)

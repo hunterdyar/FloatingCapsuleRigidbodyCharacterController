@@ -5,7 +5,7 @@ using TiltFive;
 using UnityEngine;
 using Input = UnityEngine.Input;
 
-namespace Player
+namespace Ship
 {
 	public class PlayerConnectionHandler : MonoBehaviour
 	{
@@ -52,45 +52,45 @@ namespace Player
 			}
 		}
 
-		void SpawnPlayer(PlayerIndex player)
+		void SpawnPlayer(PlayerIndex playerIndex)
 		{
-			if (_players.ContainsKey(player))
+			if (_players.ContainsKey(playerIndex))
 			{
 				return;
 			}
 			
-			var p = Instantiate(PlayerPrefab, spawnLocation.position, spawnLocation.rotation);
+			var pla = Instantiate(PlayerPrefab, spawnLocation.position, spawnLocation.rotation);
 
 			//configure input
-			var input = p.GetComponent<CharacterControllerInput>();
-			input.TiltPlayerIndex = player;
+			var player = pla.GetComponent<Player>();
+			player.Input.ControllerForward = pla;
 
 			//todo: yield here for WaitUntilWandConnected
 			
 			//The controller uses the camera to re-orient input from the axis to be relative.
 			//We set it to one of the tracked objects of the wand in order to make it relative to literally how the controller is oriented.
-			if (player != PlayerIndex.None)
+			if (playerIndex != PlayerIndex.None)
 			{
 				//can be null
-				input.ControllerForward = TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint;
-				if (input.ControllerForward == null)
+				player.Input.ControllerForward = TiltFiveManager2.Instance.allPlayerSettings[(int)playerIndex - 1].rightWandSettings.AimPoint;
+				if (player.Input.ControllerForward == null)
 				{
-					input.ControllerForward = new GameObject();
-					input.ControllerForward.name = "P" + player.ToString()+ " Aim";
-					TiltFiveManager2.Instance.allPlayerSettings[(int)player - 1].rightWandSettings.AimPoint =
-						input.ControllerForward;
+					player.Input.ControllerForward = new GameObject();
+					player.Input.ControllerForward.name = "P" + playerIndex.ToString()+ " Aim";
+					TiltFiveManager2.Instance.allPlayerSettings[(int)playerIndex - 1].rightWandSettings.AimPoint =
+						player.Input.ControllerForward;
 				}
 			}
 
-			if (TiltFive.Player.TryGetFriendlyName(player, out var friendlyName))
+			if (TiltFive.Player.TryGetFriendlyName(playerIndex, out var friendlyName))
 			{
-				p.name = "Player " + player.ToString()+ " - "+friendlyName;
+				pla.name = "Player " + playerIndex.ToString()+ " - "+friendlyName;
 			}
 
 			//todo: configure visuals
 
 			//add to dictionary
-			_players.Add(player, p);
+			_players.Add(playerIndex, pla);
 			
 			//todo: broadcast static action
 		}

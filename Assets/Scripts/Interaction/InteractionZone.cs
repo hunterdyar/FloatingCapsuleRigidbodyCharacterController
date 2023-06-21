@@ -11,7 +11,7 @@ public class InteractionZone : MonoBehaviour
     private Collider _interactionTrigger;
     private PlayerInteractionHandler _player;//injected.
     private List<Interactable> _interactables = new List<Interactable>();
-    
+    [SerializeField] private Transform idealGrabPosition;
     private void Awake()
     {
         _interactionTrigger = GetComponent<Collider>();
@@ -19,6 +19,11 @@ public class InteractionZone : MonoBehaviour
         {
             Debug.LogWarning("interaction zone must be a trigger. Setting now.");
             _interactionTrigger.isTrigger = true;
+        }
+
+        if (idealGrabPosition == null)
+        {
+            idealGrabPosition = _player.transform;
         }
     }
 
@@ -76,7 +81,7 @@ public class InteractionZone : MonoBehaviour
         if (_interactables.Count > 1)//which it usually won't be.
         {
             //.where not null
-            _interactables = _interactables.OrderBy(x => Vector3.Distance(x.transform.position, _player.transform.position)).ToList();
+            _interactables = _interactables.OrderBy(x => (x.transform.position- idealGrabPosition.position).sqrMagnitude).ToList();
         }
     }
     private void OnTriggerEnter(Collider other)

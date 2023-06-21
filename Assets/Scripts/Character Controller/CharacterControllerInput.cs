@@ -3,6 +3,8 @@ using Interaction;
 using TiltFive;
 using UnityEngine;
 using Input = UnityEngine.Input;
+using Player = Ship.Player;
+using PlayerSettings = UnityEditor.PlayerSettings;
 
 namespace Character_Controller
 {
@@ -14,16 +16,22 @@ namespace Character_Controller
 		private ControllerIndex _controllerIndex = ControllerIndex.Right;
 		public PlayerIndex TiltPlayerIndex;
 		public GameObject ControllerForward { get; set; }//forward in world space.
+		public Vector3 WorldInputDirection { get; set; }
 
 		public TiltFive.Input.WandButton interactButton;
 		private float _trigger;
 		[Range(0,1)]public float _triggerThreshold;
 		private bool _triggerPressed;
-		
+		private Player _player;
 		private void Awake()
 		{
 			_characterController = GetComponent<RBCharacterController>();
 			_interactionHandler = GetComponent<PlayerInteractionHandler>();
+		}
+
+		public void SetPlayer(Player player)
+		{
+			_player = player;
 		}
 
 		private void Start()
@@ -57,6 +65,8 @@ namespace Character_Controller
 
 					tFiveInput = right * tFiveInputv2.x + forward * tFiveInputv2.y;
 				}
+
+				WorldInputDirection = tFiveInput;
 				_characterController.Move(tFiveInput);
 				
 				_trigger = TiltFive.Input.GetTrigger(_controllerIndex, TiltPlayerIndex);
@@ -82,7 +92,7 @@ namespace Character_Controller
 			}
 			else
 			{
-				_characterController.Move(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+				_characterController.Move(new Vector3(Input.GetAxis("Horizontal"), 0,Input.GetAxis("Vertical")));
 				if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))
 				{
 					_interactionHandler.Interact();
