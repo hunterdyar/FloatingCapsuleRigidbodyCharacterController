@@ -19,7 +19,11 @@ namespace Ship
 		//prefab spawning
 		private int _currentDuration;
 
-		public bool IsActive => _ship != null;//true on gain, false on lose. Or check ship if we are in their list... or just this, so long as it reset.
+		[Header("Configuration")] public GameObject InstantiateDuringLifetimePrefab;
+		public GameObject InstantiateOnGainPrefab;
+
+		private GameObject _lifetimeGameObject;
+			public bool IsActive => _ship != null;//true on gain, false on lose. Or check ship if we are in their list... or just this, so long as it reset.
 		public virtual void OnGain(Ship ship)
 		{
 			if (_ship != null)
@@ -36,6 +40,19 @@ namespace Ship
 			_ship = ship;
 			_currentDuration = duration;
 			Debug.Log($"Status Effect {name} Gained");
+
+			if (InstantiateDuringLifetimePrefab != null)
+			{
+				if (_lifetimeGameObject == null)
+				{
+					_lifetimeGameObject = Instantiate(InstantiateDuringLifetimePrefab);
+				}
+			}
+
+			if (InstantiateOnGainPrefab != null)
+			{
+				Instantiate(InstantiateOnGainPrefab);
+			}
 		}
 
 		private void Beat()
@@ -60,6 +77,10 @@ namespace Ship
 			Debug.Log($"Status Effect {name} Over");
 			_ship.GameTimeline.OnBeat -= Beat;
 			_ship = null;
+			if (_lifetimeGameObject != null)
+			{
+				Destroy(_lifetimeGameObject);
+			}
 		}
 		
 		//convenience wrapper.

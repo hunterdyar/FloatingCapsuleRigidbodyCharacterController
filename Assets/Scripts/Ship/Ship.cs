@@ -92,6 +92,16 @@ namespace Ship
 			
 		}
 
+		private void OnDestroy()
+		{
+			//status's are scriptableobjects, so we should clear out any data they have when we exit play mode, switch scenes, etc
+			foreach (var status in _statusEffects)
+			{
+				//remove from list, but why bother
+				status.OnLose();
+			}
+		}
+
 		private void TakeDamage(ref ShipEvent shipEvent)
 		{
 			_shipInfo.TakeDamage(shipEvent.damage);

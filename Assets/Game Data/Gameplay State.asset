@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: -3291378469920245995}
   - {fileID: 4939762661852049643}
   - {fileID: -6367087822129311428}
+  - {fileID: 7634622518405129159}
 --- !u!114 &4939762661852049643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +69,25 @@ MonoBehaviour:
   m_Name: Paused
   m_EditorClassIdentifier: 
   stateName: Paused
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7634622518405129159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702dc4cea2bef349b35e0703b8eb4cf, type: 3}
+  m_Name: PlayersConnecting
+  m_EditorClassIdentifier: 
+  stateName: PlayersConnecting
   OnEnter:
     m_PersistentCalls:
       m_Calls: []

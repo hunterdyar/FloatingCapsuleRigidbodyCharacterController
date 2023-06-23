@@ -29,7 +29,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3607878967783369847}
-  - {fileID: 891030081254271114}
+  - {fileID: 502381401504836177}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,36 +175,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8061489137265250515}
     m_Modifications:
-    - target: {fileID: 3966682643217265432, guid: bee6440ef1f535845bd5b671acaffc4f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966682643217265432, guid: bee6440ef1f535845bd5b671acaffc4f,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966682643217265432, guid: bee6440ef1f535845bd5b671acaffc4f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966682643217265432, guid: bee6440ef1f535845bd5b671acaffc4f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966682643217265432, guid: bee6440ef1f535845bd5b671acaffc4f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4216516072718468021, guid: bee6440ef1f535845bd5b671acaffc4f,
         type: 3}
       propertyPath: m_Name
       value: Status Display Info Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 4829808344976820070, guid: bee6440ef1f535845bd5b671acaffc4f,
+        type: 3}
+      propertyPath: _gameplayState
+      value: 
+      objectReference: {fileID: -3291378469920245995, guid: 73a4eb31fe2e8724bb34562395e3b64d,
+        type: 2}
     - target: {fileID: 7618427603252143740, guid: bee6440ef1f535845bd5b671acaffc4f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -315,7 +296,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bee6440ef1f535845bd5b671acaffc4f, type: 3}
---- !u!224 &891030081254271114 stripped
+--- !u!224 &502381401504836177 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7618427603252143740, guid: bee6440ef1f535845bd5b671acaffc4f,
     type: 3}
