@@ -61,7 +61,10 @@ namespace Timeline
 					yield return null; //to wait for animations, ship events could return coroutines.
 				}
 			}
-
+			//check if we are still alive or not?
+			
+			//move to game ended state.
+			
 			IsTimelineActive = false;
 		}
 

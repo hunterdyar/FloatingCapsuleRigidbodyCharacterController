@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ee1fcd6618cf94ea5a6a7e6c1f18ee, type: 3}
   m_Name: Gameplay State
   m_EditorClassIdentifier: 
-  _defaultState: {fileID: -3291378469920245995}
+  _defaultState: {fileID: 7634622518405129159}
   states:
   - {fileID: -3291378469920245995}
   - {fileID: 4939762661852049643}
